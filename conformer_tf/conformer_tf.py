@@ -83,10 +83,11 @@ class BatchNorm(tf.keras.layers.Layer):
     def __init__(self, causal, **kwargs):
         super(BatchNorm, self).__init__(**kwargs)
         self.causal = causal
+        self.batchnorm = tf.keras.layers.BatchNormalization(axis=-1)
 
     def call(self, inputs):
         if not self.causal:
-            return tf.keras.layers.BatchNormalization(axis=-1)(inputs)
+            return self.batchnorm(inputs)
         return tf.identity(inputs)
 
 
